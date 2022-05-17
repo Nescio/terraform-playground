@@ -2,9 +2,11 @@ package sdk
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/url"
+	"strconv"
 )
 
 // Compile-time proof of interface implementation.
@@ -46,6 +48,30 @@ type Pet struct {
 	Name    string `json:"name"`
 	Species string `json:"species"`
 	Age     int    `json:"age"`
+}
+
+func (p *Pet) UnmarshalJSON(data []byte) error {
+
+	var v []interface{}
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+
+	if len(v) != 4 {
+		return errors.New("invalid pet")
+	}
+
+	id, ok := v[0].(int)
+	if !ok {
+		return errors.New("invalid pet id")
+	}
+
+	p.ID = strconv.Itoa(id)
+	p.Name, _ = v[1].(string)
+	p.Species = v[2].(string)
+	p.Age = v[3].(int)
+
+	return nil
 }
 
 // PetCreateOptions represents the options for creating an pet.
