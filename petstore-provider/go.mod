@@ -3,7 +3,7 @@ module github.com/Nescio/terraform-playground/petstore-provider
 go 1.18
 
 require (
-	github.com/Nescio/terraform-playground/sdk v0.0.0-20220517165103-64198503ea45
+	github.com/Nescio/terraform-playground/sdk v0.0.0-20220517190327-ef4d8844f591
 	github.com/hashicorp/terraform-plugin-sdk v1.17.2
 )
 

@@ -46,6 +46,8 @@ github.com/Microsoft/go-winio v0.4.16 h1:FtSW/jqD+l4ba5iPBj9CODVtgfYAD8w2wS923g/
 github.com/Microsoft/go-winio v0.4.16/go.mod h1:XB6nPKklQyQ7GC9LdcBEcBl8PF76WugXOPRXwdLnMv0=
 github.com/Nescio/terraform-playground/sdk v0.0.0-20220517165103-64198503ea45 h1:G/AzRMdFwfwYDzkxwjxJUejNYtMDJVUO2xNllNNPISw=
 github.com/Nescio/terraform-playground/sdk v0.0.0-20220517165103-64198503ea45/go.mod h1:I7CyrRnTPZWuOBqhj8weffv8E9wlfPchTqPN4YQLcME=
+github.com/Nescio/terraform-playground/sdk v0.0.0-20220517190327-ef4d8844f591 h1:LYJJGgpFkLkwQcWtQg/Wi6VkcMRx8fZk7xZiHxUJgfA=
+github.com/Nescio/terraform-playground/sdk v0.0.0-20220517190327-ef4d8844f591/go.mod h1:I7CyrRnTPZWuOBqhj8weffv8E9wlfPchTqPN4YQLcME=
 github.com/agext/levenshtein v1.2.1/go.mod h1:JEDfjyjHDjOF/1e4FlBE/PkbqA9OfWu2ki2W0IB5558=
 github.com/agext/levenshtein v1.2.2 h1:0S/Yg6LYmFJ5stwQeRp6EeOcCbj7xiqQSdNelsXvaqE=
 github.com/agext/levenshtein v1.2.2/go.mod h1:JEDfjyjHDjOF/1e4FlBE/PkbqA9OfWu2ki2W0IB5558=
