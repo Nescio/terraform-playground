@@ -110,7 +110,7 @@ type Client struct {
 }
 
 func (c *Client) debug(format string, v ...interface{}) {
-	c.log.Printf("[DEBUG] go-petstore "+format, v...)
+	c.log.Printf("[DEBUG] go-petstore "+format+"\n", v...)
 }
 
 func (c *Client) newRequest(method, path string, v interface{}) (*http.Request, error) {

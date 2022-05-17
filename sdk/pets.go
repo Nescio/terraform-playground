@@ -5,9 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"net/url"
-	"strconv"
 )
 
 // Compile-time proof of interface implementation.
@@ -45,48 +43,10 @@ type pets struct {
 
 // Pet represents a Petstore pet.
 type Pet struct {
-	ID      string `json:"id"`
-	Name    string `json:"name"`
-	Species string `json:"species"`
-	Age     int    `json:"age"`
-}
-
-func (p Pet) MarshalJSON() ([]byte, error) {
-	id, err := strconv.Atoi(p.ID)
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal([]interface{}{
-		id,
-		p.Name,
-		p.Species,
-		p.Age,
-	})
-}
-
-func (p *Pet) UnmarshalJSON(data []byte) error {
-	log.Println("UnmarshalJSON:", string(data))
-
-	var v map[string]interface{}
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-
-	if len(v) != 4 {
-		return errors.New("invalid pet")
-	}
-
-	id, ok := v["ID"].(int)
-	if !ok {
-		return errors.New("invalid pet id")
-	}
-
-	p.ID = strconv.Itoa(id)
-	p.Name, _ = v["Name"].(string)
-	p.Species = v["Species"].(string)
-	p.Age = v["Age"].(int)
-
-	return nil
+	ID      json.Number `json:"id"`
+	Name    string      `json:"name"`
+	Species string      `json:"species"`
+	Age     int         `json:"age"`
 }
 
 // PetCreateOptions represents the options for creating an pet.
@@ -135,7 +95,7 @@ func (p *pets) Read(id string) (*Pet, error) {
 		return nil, errors.New("invalid id")
 	}
 
-	path := fmt.Sprintf("%s/%s", p.path, url.QueryEscape(id))
+	path := fmt.Sprintf("%s?id=%s", p.path, url.QueryEscape(id))
 	req, err := p.client.newRequest("GET", path, nil)
 	if err != nil {
 		return nil, err
@@ -163,7 +123,7 @@ func (p *pets) Update(id string, options PetUpdateOptions) (*Pet, error) {
 		return nil, errors.New("invalid id")
 	}
 
-	path := fmt.Sprintf("%s/%s", p.path, url.QueryEscape(id))
+	path := fmt.Sprintf("%s?id=%s", p.path, url.QueryEscape(id))
 	req, err := p.client.newRequest("PATCH", path, &options)
 	if err != nil {
 		return nil, err
@@ -184,7 +144,7 @@ func (p *pets) Delete(id string) error {
 		return errors.New("invalid id")
 	}
 
-	path := fmt.Sprintf("%s/%s", p.path, url.QueryEscape(id))
+	path := fmt.Sprintf("%s?id=%s", p.path, url.QueryEscape(id))
 	req, err := p.client.newRequest("DELETE", path, nil)
 	if err != nil {
 		return err

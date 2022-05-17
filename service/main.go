@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-var pets = map[int64]*pet{}
+var pets = map[int]*pet{}
 
 func main() {
 	http.HandleFunc("/api/v1/pets", handlePets)
@@ -17,7 +17,7 @@ func main() {
 }
 
 type pet struct {
-	ID      int64  `json:"id"`
+	ID      int    `json:"id"`
 	Name    string `json:"name"`
 	Species string `json:"species"`
 	Age     int    `json:"age"`
@@ -43,8 +43,9 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	pet.ID = rand.Int63()
+	pet.ID = rand.Int()
 	pets[pet.ID] = &pet
+	log.Printf("Created pet %v", pet)
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
@@ -57,7 +58,7 @@ func handleGetById(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "id is required", http.StatusBadRequest)
 		return
 	}
-	intId, err := strconv.ParseInt(id, 10, 64)
+	intId, err := strconv.Atoi(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -67,14 +68,12 @@ func handleGetById(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "pet not found", http.StatusNotFound)
 		return
 	}
+
+	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(pet); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(pet)
 }
 
 func handlePatch(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +82,7 @@ func handlePatch(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "id is required", http.StatusBadRequest)
 		return
 	}
-	intId, err := strconv.ParseInt(id, 10, 64)
+	intId, err := strconv.Atoi(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -107,7 +106,7 @@ func handleDelete(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "id is required", http.StatusBadRequest)
 		return
 	}
-	intId, err := strconv.ParseInt(id, 10, 64)
+	intId, err := strconv.Atoi(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

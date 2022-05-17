@@ -1,0 +1,24 @@
+
+### CREATE - 201 Created
+POST  http://localhost:8080/api/v1/pets
+
+{
+	"Name": "Fido",
+	"Species": "Dog",
+	"Age": 2
+}
+
+### READ - 200 OK
+GET http://localhost:8080/api/v1/pets?id=5577006791947779410
+
+### UPDATE - 204 No Content
+PATCH  http://localhost:8080/api/v1/pets?id=5577006791947779410
+
+{
+	"Name": "NotFido",
+	"Species": "HotDog",
+	"Age": 0
+}
+
+### DELETE - 204 No Content
+DELETE  http://localhost:8080/api/v1/pets?id=5577006791947779410

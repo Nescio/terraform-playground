@@ -45,7 +45,7 @@ func resourcePetCreate(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	d.SetId(pet.ID)
+	d.SetId(string(pet.ID))
 	resourcePetRead(d, meta)
 	return nil
 }
