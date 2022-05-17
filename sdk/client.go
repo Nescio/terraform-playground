@@ -164,7 +164,7 @@ func (c *Client) do(ctx context.Context, req *http.Request, v interface{}) error
 	}
 	defer resp.Body.Close()
 
-	c.debug("response: %v", resp)
+	c.debug("response: %+v", resp)
 
 	if err := c.checkResponseCode(resp); err != nil {
 		if err != ErrGatewayTimeout {
@@ -203,7 +203,7 @@ func (c *Client) checkResponseCode(r *http.Response) error {
 	errPayload := &jsonapi.ErrorsPayload{}
 	err := json.NewDecoder(r.Body).Decode(errPayload)
 	if err != nil || len(errPayload.Errors) == 0 {
-		c.debug("resp status: %v", r.Status)
+		c.debug("resp status: %+v", r.Status)
 		return fmt.Errorf(r.Status)
 	}
 
