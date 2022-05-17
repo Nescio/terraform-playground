@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/url"
 	"strconv"
 )
@@ -51,6 +52,7 @@ type Pet struct {
 }
 
 func (p *Pet) UnmarshalJSON(data []byte) error {
+	log.Println("UnmarshalJSON:", string(data))
 
 	var v []interface{}
 	if err := json.Unmarshal(data, &v); err != nil {
