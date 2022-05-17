@@ -1,10 +1,13 @@
-module github.com/Nescio/terraform-playground/petstore-provider
+module github.com/Nescio/terraform-playground
 
 go 1.18
 
 require (
-	github.com/Nescio/terraform-playground/sdk v0.0.0-20220517190327-ef4d8844f591
+	github.com/google/go-querystring v1.1.0
+	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/terraform-plugin-sdk v1.17.2
+	github.com/svanharmelen/jsonapi v0.0.0-20180618144545-0c0828c3f16d
+	golang.org/x/time v0.0.0-20220411224347-583f2d630306
 )
 
 require (
@@ -26,12 +29,10 @@ require (
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/google/go-cmp v0.5.5 // indirect
-	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
-	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-getter v1.5.11 // indirect
 	github.com/hashicorp/go-hclog v0.9.2 // indirect
 	github.com/hashicorp/go-multierror v1.0.0 // indirect
@@ -66,7 +67,6 @@ require (
 	github.com/oklog/run v1.0.0 // indirect
 	github.com/posener/complete v1.2.1 // indirect
 	github.com/spf13/afero v1.2.2 // indirect
-	github.com/svanharmelen/jsonapi v0.0.0-20180618144545-0c0828c3f16d // indirect
 	github.com/ulikunitz/xz v0.5.8 // indirect
 	github.com/vmihailenco/msgpack/v4 v4.3.12 // indirect
 	github.com/vmihailenco/tagparser v0.1.1 // indirect
@@ -80,7 +80,6 @@ require (
 	golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43 // indirect
 	golang.org/x/sys v0.0.0-20210324051608-47abb6519492 // indirect
 	golang.org/x/text v0.3.5 // indirect
-	golang.org/x/time v0.0.0-20220411224347-583f2d630306 // indirect
 	golang.org/x/tools v0.0.0-20201028111035-eafbe7b904eb // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/api v0.34.0 // indirect
