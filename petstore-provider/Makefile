@@ -17,7 +17,7 @@ test: test-all
 
 .PHONY: test-all
 test-all:
-	@TF_ACC=1 go test -v -race $(GO_PACKAGES)
+	@TF_LOG=TRACE PETSTORE_ADDRESS=http://localhost:8080 TF_ACC=1 go test -v -race $(GO_PACKAGES)
 
 ${DIST_PATH}/${PLUGIN_NAME}: ${GO_FILES}
 	mkdir -p $(DIST_PATH); \

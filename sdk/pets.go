@@ -51,6 +51,19 @@ type Pet struct {
 	Age     int    `json:"age"`
 }
 
+func (p Pet) MarshalJSON() ([]byte, error) {
+	id, err := strconv.Atoi(p.ID)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal([]interface{}{
+		id,
+		p.Name,
+		p.Species,
+		p.Age,
+	})
+}
+
 func (p *Pet) UnmarshalJSON(data []byte) error {
 	log.Println("UnmarshalJSON:", string(data))
 
