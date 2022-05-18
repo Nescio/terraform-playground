@@ -13,7 +13,9 @@ var pets = map[int]*pet{}
 
 func main() {
 	http.HandleFunc("/api/v1/pets", handlePets)
-	http.ListenAndServe(":8080", nil)
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
 }
 
 type pet struct {
@@ -49,7 +51,9 @@ func handlePost(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(pet)
+	if err := json.NewEncoder(w).Encode(pet); err != nil {
+		log.Printf("Error encoding pet %v", pet)
+	}
 }
 
 func handleGetById(w http.ResponseWriter, r *http.Request) {

@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"errors"
 	"fmt"
 	"testing"
 
@@ -40,7 +41,7 @@ func testAccCheckPSPetDestroy(s *terraform.State) error {
 		}
 		conn := testAccProvider.Meta().(*sdk.Client)
 		pet, err := conn.Pets.Read(rs.Primary.ID)
-		if err != sdk.ErrResourceNotFound {
+		if !errors.Is(err, sdk.ErrResourceNotFound) {
 			return fmt.Errorf("Pet %s still exists", pet.ID)
 		}
 	}

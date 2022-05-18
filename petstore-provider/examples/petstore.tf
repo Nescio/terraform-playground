@@ -12,7 +12,7 @@ provider "petstore" {
 }
 
 resource "petstore_pet" "my_pet" {
-  name    = "snowball"
-  species = "cat"
+  name    = lower( join("", regexall("[a-zA-Z]+", "1Cha 2rl_i1e")))
+  species = "dog"
   age     = 7
 }

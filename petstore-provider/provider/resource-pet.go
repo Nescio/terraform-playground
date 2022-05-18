@@ -32,8 +32,8 @@ func resourcePet() *schema.Resource {
 	}
 }
 
-func resourcePetCreate(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*sdk.Client)
+func resourcePetCreate(d *schema.ResourceData, m interface{}) error {
+	conn := m.(*sdk.Client)
 	options := sdk.PetCreateOptions{
 		Name:    d.Get("name").(string),
 		Species: d.Get("species").(string),
@@ -46,12 +46,11 @@ func resourcePetCreate(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	d.SetId(string(pet.ID))
-	resourcePetRead(d, meta)
-	return nil
+	return resourcePetRead(d, m)
 }
 
-func resourcePetRead(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*sdk.Client)
+func resourcePetRead(d *schema.ResourceData, m interface{}) error {
+	conn := m.(*sdk.Client)
 	pet, err := conn.Pets.Read(d.Id())
 	if err != nil {
 		return err
@@ -62,8 +61,8 @@ func resourcePetRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourcePetUpdate(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*sdk.Client)
+func resourcePetUpdate(d *schema.ResourceData, m interface{}) error {
+	conn := m.(*sdk.Client)
 	options := sdk.PetUpdateOptions{}
 	if d.HasChange("name") {
 		options.Name = d.Get("name").(string)
@@ -71,12 +70,13 @@ func resourcePetUpdate(d *schema.ResourceData, meta interface{}) error {
 	if d.HasChange("age") {
 		options.Age = d.Get("age").(int)
 	}
-	conn.Pets.Update(d.Id(), options)
-	return resourcePetRead(d, meta)
+	if _, err := conn.Pets.Update(d.Id(), options); err != nil {
+		return err
+	}
+	return resourcePetRead(d, m)
 }
 
-func resourcePetDelete(d *schema.ResourceData, meta interface{}) error {
-	conn := meta.(*sdk.Client)
-	conn.Pets.Delete(d.Id())
-	return nil
+func resourcePetDelete(d *schema.ResourceData, m interface{}) error {
+	conn := m.(*sdk.Client)
+	return conn.Pets.Delete(d.Id())
 }

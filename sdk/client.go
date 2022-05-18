@@ -83,7 +83,7 @@ func NewClient(cfg *Config) (*Client, error) {
 
 	baseURL, err := url.Parse(config.Address + config.BasePath)
 	if err != nil {
-		return nil, fmt.Errorf("invalid address: %v", err)
+		return nil, fmt.Errorf("invalid address: %w", err)
 	}
 
 	client := &Client{
@@ -167,11 +167,14 @@ func (c *Client) do(ctx context.Context, req *http.Request, v interface{}) error
 	c.debug("response: %+v", resp)
 
 	if err := c.checkResponseCode(resp); err != nil {
-		if err != ErrGatewayTimeout {
+		if !errors.Is(err, ErrGatewayTimeout) {
 			return err
 		}
 		// If the request timed out, retry once.
 		resp, err = c.http.Do(req)
+		if err != nil {
+			return err
+		}
 		if err := c.checkResponseCode(resp); err != nil {
 			return err
 		}
@@ -181,7 +184,9 @@ func (c *Client) do(ctx context.Context, req *http.Request, v interface{}) error
 		return nil
 	}
 	buf := bytes.Buffer{}
-	buf.ReadFrom(resp.Body)
+	if _, err := buf.ReadFrom(resp.Body); err != nil {
+		return err
+	}
 	return json.Unmarshal(buf.Bytes(), v)
 }
 

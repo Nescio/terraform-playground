@@ -17,7 +17,7 @@ func validString(v *string) bool {
 	return v != nil && *v != ""
 }
 
-// validInteger checks if the given input is present and greater than zero
+// validInteger checks if the given input is present and greater than zero.
 func validInt(v *int) bool {
 	return v != nil && *v > 0
 }
